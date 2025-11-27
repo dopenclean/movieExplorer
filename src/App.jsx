@@ -1,6 +1,8 @@
 import "./App.css";
+import { Routes, Route, Link } from "react-router-dom";
 import MovieSearch from "./components/MovieSearch";
 import MovieDetails from "./components/MovieDetails";
+import PopularMovies from "./components/PopularMovies";
 import { useState } from "react";
 
 export default function App() {
@@ -8,13 +10,47 @@ export default function App() {
 
   return (
     <div className="App">
-      <h1>Movie Explorer 🎬</h1>
+      <h1>Movie Explorer</h1>
 
-      <MovieSearch onSelectMovie={setSelectedMovie} />
+      {/* NAVIGATION */}
+      <nav>
+        <Link to="/" style={{ marginRight: "12px" }}>Home</Link>
+        <Link to="/popular">Popular Movies</Link>
+      </nav>
 
-      {selectedMovie && (
-        <MovieDetails movie={selectedMovie} onClose={() => setSelectedMovie(null)} />
-      )}
+      {/* PAGE ROUTES */}
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <MovieSearch onSelectMovie={setSelectedMovie} />
+              {selectedMovie && (
+                <MovieDetails
+                  movie={selectedMovie}
+                  onClose={() => setSelectedMovie(null)}
+                />
+              )}
+            </>
+          }
+        />
+
+        {/* THIS IS THE ONLY CHANGE */}
+        <Route 
+          path="/popular" 
+          element={
+            <>
+              <PopularMovies onSelectMovie={setSelectedMovie} />
+              {selectedMovie && (
+                <MovieDetails
+                  movie={selectedMovie}
+                  onClose={() => setSelectedMovie(null)}
+                />
+              )}
+            </>
+          } 
+        />
+      </Routes>
     </div>
   );
 }
