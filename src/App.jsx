@@ -35,7 +35,7 @@ export default function App() {
           }
         />
 
-        {/* THIS IS THE ONLY CHANGE */}
+        {/* THIS IS THE ONLY CHANGES */}
         <Route 
           path="/popular" 
           element={
