@@ -382,7 +382,7 @@ nav a.active {
   border: none;
   width: 32px;
   height: 32px;
-  border-radius: 50%;
+  border-radius: 8px; /* Slightly rounded corners */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -429,4 +429,4 @@ nav a.active {
   }
 }
 
-/* Modal / Movie Details */
+/* Modal / Movie Details *//* Modal / Movie Details *//* Modal / Movie Details */

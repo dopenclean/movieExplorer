@@ -4,6 +4,9 @@ import { AnimatePresence, motion } from "framer-motion";
 import Home from "./components/Home";
 import MovieDetails from "./components/MovieDetails";
 import PopularMovies from "./components/PopularMovies";
+import LatestMovies from "./components/LatestMovies";
+import PopularSeries from "./components/PopularSeries";
+import LatestSeries from "./components/LatestSeries";
 import LoadingScreen from "./components/LoadingScreen";
 import { useState, useEffect } from "react";
 import { fetchPopularMovies } from "./api";
@@ -99,6 +102,9 @@ export default function App() {
           <nav>
             <Link to="/" className={location.pathname === "/" ? "active" : ""}>Home</Link>
             <Link to="/popular" className={location.pathname === "/popular" ? "active" : ""}>Popular Movies</Link>
+            <Link to="/latest" className={location.pathname === "/latest" ? "active" : ""}>Latest Movies</Link>
+            <Link to="/popular-series" className={location.pathname === "/popular-series" ? "active" : ""}>Popular Series</Link>
+            <Link to="/latest-series" className={location.pathname === "/latest-series" ? "active" : ""}>Latest Series</Link>
           </nav>
 
           <AnimatePresence mode="wait">
@@ -116,6 +122,30 @@ export default function App() {
                 element={
                   <PageTransition>
                     <PopularMovies onSelectMovie={setSelectedMovie} preloadedData={preloadedData} />
+                  </PageTransition>
+                }
+              />
+              <Route
+                path="/latest"
+                element={
+                  <PageTransition>
+                    <LatestMovies onSelectMovie={setSelectedMovie} />
+                  </PageTransition>
+                }
+              />
+              <Route
+                path="/popular-series"
+                element={
+                  <PageTransition>
+                    <PopularSeries onSelectMovie={setSelectedMovie} />
+                  </PageTransition>
+                }
+              />
+              <Route
+                path="/latest-series"
+                element={
+                  <PageTransition>
+                    <LatestSeries onSelectMovie={setSelectedMovie} />
                   </PageTransition>
                 }
               />

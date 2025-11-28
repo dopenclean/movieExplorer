@@ -22,3 +22,27 @@ export async function fetchPopularMovies() {
   const data = await res.json();
   return data.results;
 }
+
+export async function fetchLatestMovies() {
+  const url = `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error("Failed API Request");
+  const data = await res.json();
+  return data.results;
+}
+
+export async function fetchPopularSeries() {
+  const url = `https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error("Failed API Request");
+  const data = await res.json();
+  return data.results;
+}
+
+export async function fetchLatestSeries() {
+  const url = `https://api.themoviedb.org/3/tv/airing_today?api_key=${API_KEY}`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error("Failed API Request");
+  const data = await res.json();
+  return data.results;
+}

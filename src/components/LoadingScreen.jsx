@@ -66,7 +66,7 @@ export default function LoadingScreen({ onComplete }) {
                     duration: 0.5,
                     stagger: 0.03,
                     ease: "back.in(1.7)",
-                    delay: 0.9, // Stagger in (0.05 * letters) + hold (0.3)
+                    delay: 1.0, // Stagger in (0.05 * letters) + hold (0.3)
                     onComplete: () => {
                         wordDiv.remove();
                     },
@@ -74,7 +74,7 @@ export default function LoadingScreen({ onComplete }) {
             });
 
             // Add a delay for the next word to appear
-            tl.to({}, { duration: 1.5 }); // in + hold + out
+            tl.to({}, { duration: 1.8 }); // in + hold + out
         });
 
         // Final screen transition
