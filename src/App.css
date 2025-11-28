@@ -186,7 +186,6 @@ nav a.active {
   align-items: center;
   z-index: 1000;
   padding: 2rem;
-  animation: fadeIn 0.3s ease;
 }
 
 .details-box {
@@ -202,7 +201,6 @@ nav a.active {
   display: grid;
   grid-template-columns: 1fr 2fr;
   gap: 2rem;
-  animation: slideUp 0.3s ease;
 }
 
 .details-close-btn {
@@ -260,25 +258,4 @@ nav a.active {
   }
 }
 
-/* Animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes slideUp {
-  from {
-    transform: translateY(20px);
-    opacity: 0;
-  }
-
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
+/* Modal / Movie Details */

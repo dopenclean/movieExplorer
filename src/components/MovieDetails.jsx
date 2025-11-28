@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import "./App.css"; // Ensure CSS is imported if not already globally available
+
 
 export default function MovieDetails({ movie, onClose }) {
   return (
