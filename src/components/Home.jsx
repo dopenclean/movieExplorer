@@ -3,14 +3,15 @@ import { fetchPopularMovies } from "../api";
 import MovieCard from "./MovieCard";
 import MovieSearch from "./MovieSearch";
 
-function Home({ onSelectMovie }) {
+function Home({ onSelectMovie, preloadedData }) {
     const [featuredMovie, setFeaturedMovie] = useState(null);
     const [trendingMovies, setTrendingMovies] = useState([]);
 
     useEffect(() => {
         const loadData = async () => {
             try {
-                const movies = await fetchPopularMovies();
+                // Use preloaded data if available, otherwise fetch
+                const movies = preloadedData || await fetchPopularMovies();
                 if (movies && movies.length > 0) {
                     setFeaturedMovie(movies[0]); // First movie as hero
                     setTrendingMovies(movies.slice(1, 5)); // Next 4 as trending preview
@@ -20,7 +21,7 @@ function Home({ onSelectMovie }) {
             }
         };
         loadData();
-    }, []);
+    }, [preloadedData]);
 
     return (
         <div className="home-container">

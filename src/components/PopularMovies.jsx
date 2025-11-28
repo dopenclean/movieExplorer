@@ -2,14 +2,15 @@ import { useEffect, useState } from "react";
 import { fetchPopularMovies } from "../api";
 import MovieCard from "./MovieCard";
 
-function PopularMovies({ onSelectMovie }) {
+function PopularMovies({ onSelectMovie, preloadedData }) {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadMovies = async () => {
       try {
-        const data = await fetchPopularMovies();
+        // Use preloaded data if available, otherwise fetch
+        const data = preloadedData || await fetchPopularMovies();
         setMovies(data);
       } catch (error) {
         console.error(error);
@@ -18,7 +19,7 @@ function PopularMovies({ onSelectMovie }) {
       }
     };
     loadMovies();
-  }, []);
+  }, [preloadedData]);
 
   if (loading) return <div className="loading">Loading popular movies...</div>;
 
