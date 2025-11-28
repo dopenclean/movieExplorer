@@ -1,56 +1,62 @@
 import "./App.css";
-import { Routes, Route, Link } from "react-router-dom";
-import MovieSearch from "./components/MovieSearch";
+import { Routes, Route, Link, useLocation } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
+import Home from "./components/Home";
 import MovieDetails from "./components/MovieDetails";
 import PopularMovies from "./components/PopularMovies";
 import { useState } from "react";
 
+const PageTransition = ({ children }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: -20 }}
+    transition={{ duration: 0.3 }}
+  >
+    {children}
+  </motion.div>
+);
+
 export default function App() {
   const [selectedMovie, setSelectedMovie] = useState(null);
+  const location = useLocation();
 
   return (
     <div className="App">
-      <h1>Movie Explorer</h1>
-
-      {/* NAVIGATION */}
       <nav>
-        <Link to="/" style={{ marginRight: "12px" }}>Home</Link>
-        <Link to="/popular">Popular Movies</Link>
+        <Link to="/" className={location.pathname === "/" ? "active" : ""}>Home</Link>
+        <Link to="/popular" className={location.pathname === "/popular" ? "active" : ""}>Popular Movies</Link>
       </nav>
 
-      {/* PAGE ROUTES */}
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <>
-              <MovieSearch onSelectMovie={setSelectedMovie} />
-              {selectedMovie && (
-                <MovieDetails
-                  movie={selectedMovie}
-                  onClose={() => setSelectedMovie(null)}
-                />
-              )}
-            </>
-          }
-        />
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
+          <Route
+            path="/"
+            element={
+              <PageTransition>
+                <Home onSelectMovie={setSelectedMovie} />
+              </PageTransition>
+            }
+          />
+          <Route
+            path="/popular"
+            element={
+              <PageTransition>
+                <PopularMovies onSelectMovie={setSelectedMovie} />
+              </PageTransition>
+            }
+          />
+        </Routes>
+      </AnimatePresence>
 
-        {/* THIS IS THE ONLY CHANGES */}
-        <Route 
-          path="/popular" 
-          element={
-            <>
-              <PopularMovies onSelectMovie={setSelectedMovie} />
-              {selectedMovie && (
-                <MovieDetails
-                  movie={selectedMovie}
-                  onClose={() => setSelectedMovie(null)}
-                />
-              )}
-            </>
-          } 
-        />
-      </Routes>
+      <AnimatePresence>
+        {selectedMovie && (
+          <MovieDetails
+            movie={selectedMovie}
+            onClose={() => setSelectedMovie(null)}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }

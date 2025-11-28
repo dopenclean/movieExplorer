@@ -28,38 +28,34 @@ export default function MovieSearch({ onSelectMovie }) {
 
   return (
     <div>
-      <h2>Movie Search</h2>
-
-      <form onSubmit={handleSearch}>
+      <form onSubmit={handleSearch} className="search-form">
         <input
           type="text"
           placeholder="Search movies..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
+          className="search-input"
         />
-        <button>Search</button>
+        <button type="submit">Search</button>
       </form>
 
-      {loading && (
-        <div className="results-container">
-            {Array.from({ length: 8 }).map((_, i) => (
-            <div key={i} className="skeleton" />
-            ))}
-        </div>
-        )}
+      {loading && <div className="loading">Searching...</div>}
 
       {error && <div className="error-card">{error}</div>}
 
       {!loading && movies.length === 0 && !query && (
         <p style={{ opacity: 0.6 }}>Start by searching any movie… 🍿</p>
-        )}
+      )}
 
-
-      <ul className="results-container">
+      <div className="movie-grid">
         {movies.map((movie) => (
-          <MovieCard key={movie.id} movie={movie} onClick={() => onSelectMovie(movie)} />
+          <MovieCard
+            key={movie.id}
+            movie={movie}
+            onClick={() => onSelectMovie(movie)}
+          />
         ))}
-      </ul>
+      </div>
     </div>
   );
 }

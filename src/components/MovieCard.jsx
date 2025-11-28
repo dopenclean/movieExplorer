@@ -1,15 +1,23 @@
-export default function MovieCard({ movie, onClick }) {
-  return (
-    <div className="movie-item" onClick={onClick}>
-      {movie.poster_path && (
-        <img
-          src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
-          alt={movie.title}
-        />
-      )}
+import React from "react";
 
-      <strong>{movie.title}</strong>
-      <p>{movie.release_date}</p>
+
+function MovieCard({ movie, onClick }) {
+  return (
+    <div className="movie-card" onClick={() => onClick(movie)}>
+      <img
+        src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+        alt={movie.title}
+        className="movie-poster"
+        onError={(e) => {
+          e.target.src = "https://via.placeholder.com/500x750?text=No+Image";
+        }}
+      />
+      <div className="movie-info">
+        <h3>{movie.title}</h3>
+        <p>{movie.release_date?.split("-")[0] || "N/A"}</p>
+      </div>
     </div>
   );
 }
+
+export default MovieCard;

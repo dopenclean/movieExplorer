@@ -2,41 +2,40 @@ import { useEffect, useState } from "react";
 import { fetchPopularMovies } from "../api";
 import MovieCard from "./MovieCard";
 
-export default function PopularMovies({ onSelectMovie }) {
+function PopularMovies({ onSelectMovie }) {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function load() {
+    const loadMovies = async () => {
       try {
-        const results = await fetchPopularMovies();
-        setMovies(results);
-      } catch (err) {
-        console.error("Failed to load popular movies:", err);
+        const data = await fetchPopularMovies();
+        setMovies(data);
+      } catch (error) {
+        console.error(error);
       } finally {
         setLoading(false);
       }
-    }
-    load();
+    };
+    loadMovies();
   }, []);
 
-  if (loading) {
-    return <p>Loading popular movies…</p>;
-  }
+  if (loading) return <div className="loading">Loading popular movies...</div>;
 
   return (
-    <div>
-      <h2>Popular Movies Today</h2>
-
-      <ul className="results-container">
+    <div className="popular-movies-page">
+      <h2 className="section-title">Popular Movies</h2>
+      <div className="movie-grid">
         {movies.map((movie) => (
           <MovieCard
             key={movie.id}
             movie={movie}
-            onClick={() => onSelectMovie(movie)}  // This now works!
+            onClick={onSelectMovie}
           />
         ))}
-      </ul>
+      </div>
     </div>
   );
 }
+
+export default PopularMovies;
